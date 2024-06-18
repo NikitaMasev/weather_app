@@ -5,6 +5,28 @@ import 'package:weather_app/presentation/theming/theme_builder.dart';
 import 'package:weather_app/presentation/theming/theme_mode_extension.dart';
 import 'package:weather_app/presentation/theming/theme_mode_manager.dart';
 
+class ThemeModeScope extends InheritedWidget {
+  const ThemeModeScope({
+    required this.themeModeManager,
+    required super.child,
+  });
+
+  final ThemeModeManager themeModeManager;
+
+  @override
+  bool updateShouldNotify(covariant final InheritedWidget oldWidget) =>
+      oldWidget != this;
+
+  static ThemeModeManager of(final BuildContext context) {
+    final scope = context.dependOnInheritedWidgetOfExactType<ThemeModeScope>();
+
+    if (scope == null) {
+      throw Exception('ThemeModeScope not founded');
+    }
+    return scope.themeModeManager;
+  }
+}
+
 class App extends StatelessWidget {
   App({
     required this.removeNativeSplash,
@@ -17,6 +39,26 @@ class App extends StatelessWidget {
   final VoidCallback removeNativeSplash;
   final InitialPlatformDependencies initialPlatformDependencies;
 
+/*  @override
+  Widget build(final BuildContext context) => ThemeModeScope(
+    themeModeManager:  ThemeModeManager(
+      themePersistent: initialPlatformDependencies.sharedPlatformPersistent,
+      savedThemeMode: initialPlatformDependencies.savedThemeModeStr,
+      platformBarController:
+      initialPlatformDependencies.platformBarController,
+    ),
+    child: ListenableBuilder(
+      listenable: ThemeModeScope.of(context),
+      builder: (final ctx, final child)=>MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeBuilder.getLightTheme(),
+        darkTheme: ThemeBuilder.getDarkTheme(),
+        themeMode: ThemeModeScope.of(context).themeMode,
+        home: const MyHomePage(title: 'Weather Demo App'),
+      ),
+    ),
+  );*/
+
   @override
   Widget build(final BuildContext context) => ChangeNotifierProvider(
         create: (final ctx) => ThemeModeManager(
@@ -26,7 +68,6 @@ class App extends StatelessWidget {
               initialPlatformDependencies.platformBarController,
         ),
         child: Consumer<ThemeModeManager>(
-          ///TODO LISTENABLEBUILDER???
           builder: (
             final ctx,
             final themeModeManager,
