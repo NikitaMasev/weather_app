@@ -1,0 +1,15 @@
+icons_launcher: #dart run icons_launcher:create --path icons_launcher.yaml
+  image_path: "assets/png/launcher.png"
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: true
+    web:
+      enable: true
+    macos:
+      enable: true
+    windows:
+      enable: true
+    linux:
+      enable: true

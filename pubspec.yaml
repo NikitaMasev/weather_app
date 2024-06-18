@@ -21,19 +21,21 @@ dependencies:
 
   #UI
   cupertino_icons: ^1.0.8
-  #flutter_native_splash: ^2.4.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+  icons_launcher: ^2.1.7
+  build_runner:
 
 flutter:
   uses-material-design: true
 
   assets:
-     - assets/splash_light.png
-     - assets/splash_dark.png
+     - assets/png/splash_light.png
+     - assets/png/splash_dark.png
+     - assets/png/launcher.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

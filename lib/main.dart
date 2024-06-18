@@ -24,15 +24,11 @@ Future<void> _bootstrap(
         },
       );
 
-/*      FlutterNativeSplash.preserve(
-        widgetsBinding: WidgetsFlutterBinding.ensureInitialized(),
-      );*/
-
       final platformDependencies = await InitialPlatformDependencies.create();
       platformDependencies.platformBarController.setUpBarSplashStyle();
 
       //Bloc.observer = AppBlocObserver();
-      runApp(builder((){}, platformDependencies));
+      runApp(builder(() {}, platformDependencies));
     },
     (final error, final stack) async {
       log(
