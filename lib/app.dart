@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:weather_app/di/providers/theme_mode_provider.dart';
 import 'package:weather_app/presentation/theming/theme_builder.dart';
 import 'package:weather_app/presentation/theming/theme_mode_extension.dart';
@@ -15,15 +16,15 @@ class App extends StatelessWidget {
           theme: ThemeBuilder.getLightTheme(),
           darkTheme: ThemeBuilder.getDarkTheme(),
           themeMode: ThemeModeProvider.of(ctx).themeMode,
-          home: const MyHomePage(title: 'Weather Demo App'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: const MyHomePage(),
         ),
       );
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -67,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text(AppLocalizations.of(context)!.appName),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -88,12 +89,30 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+             Text(
+              AppLocalizations.of(context)!.pressedButton(_counter),
             ),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              AppLocalizations.of(context)!.hello('Aboba'),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              AppLocalizations.of(context)!.helloWorldOn(DateTime.now()),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              AppLocalizations.of(context)!.numberOfDataPoints(2056),
             ),
           ],
         ),

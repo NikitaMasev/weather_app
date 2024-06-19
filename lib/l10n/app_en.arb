@@ -1,0 +1,37 @@
+{
+  "appName": "Just A Weather",
+  "pressedButton": "You have pushed the button this many times: {value}",
+  "hello": "Hello {userName}",
+  "@hello": {
+    "description": "A message with a single parameter",
+    "placeholders": {
+      "userName": {
+        "type": "String",
+        "example": "Bob"
+      }
+    }
+  },
+  "numberOfDataPoints": "Number of data points: {value}",
+  "@numberOfDataPoints": {
+    "description": "A message with a formatted int parameter",
+    "placeholders": {
+      "value": {
+        "type": "int",
+        "format": "decimalPattern",
+        "optionalParameters": {
+          "decimalDigits": 4
+        }
+      }
+    }
+  },
+  "helloWorldOn": "Hello World, today is {date}",
+  "@helloWorldOn": {
+    "description": "A message with a date parameter",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMd"
+      }
+    }
+  }
+}

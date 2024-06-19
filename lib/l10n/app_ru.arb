@@ -1,0 +1,37 @@
+{
+  "appName": "Просто Погода",
+  "pressedButton": "Вы нажали кнопку уже вот столько раз: {value}",
+  "hello": "Привет {userName}",
+  "@hello": {
+    "description": "A message with a single parameter",
+    "placeholders": {
+      "userName": {
+        "type": "String",
+        "example": "Амогус"
+      }
+    }
+  },
+  "numberOfDataPoints": "Количество точек данных: {value}",
+  "@numberOfDataPoints": {
+    "description": "A message with a formatted int parameter",
+    "placeholders": {
+      "value": {
+        "type": "int",
+        "format": "decimalPattern",
+        "optionalParameters": {
+          "decimalDigits": 4
+        }
+      }
+    }
+  },
+  "helloWorldOn": "Привет мир, сегодня {date}",
+  "@helloWorldOn": {
+    "description": "A message with a date parameter",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMd"
+      }
+    }
+  }
+}
