@@ -1,85 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:weather_app/di/configurators/initial_platform_dependencies.dart';
+import 'package:weather_app/di/providers/theme_mode_provider.dart';
 import 'package:weather_app/presentation/theming/theme_builder.dart';
 import 'package:weather_app/presentation/theming/theme_mode_extension.dart';
 import 'package:weather_app/presentation/theming/theme_mode_manager.dart';
 
-class ThemeModeScope extends InheritedWidget {
-  const ThemeModeScope({
-    required this.themeModeManager,
-    required super.child,
-  });
-
-  final ThemeModeManager themeModeManager;
-
-  @override
-  bool updateShouldNotify(covariant final InheritedWidget oldWidget) =>
-      oldWidget != this;
-
-  static ThemeModeManager of(final BuildContext context) {
-    final scope = context.dependOnInheritedWidgetOfExactType<ThemeModeScope>();
-
-    if (scope == null) {
-      throw Exception('ThemeModeScope not founded');
-    }
-    return scope.themeModeManager;
-  }
-}
-
 class App extends StatelessWidget {
-  App({
-    required this.removeNativeSplash,
-    required this.initialPlatformDependencies,
-  }) {
-    removeNativeSplash.call();
-    initialPlatformDependencies.platformBarController.setUpBarNormalStyle();
-  }
-
-  final VoidCallback removeNativeSplash;
-  final InitialPlatformDependencies initialPlatformDependencies;
-
-/*  @override
-  Widget build(final BuildContext context) => ThemeModeScope(
-    themeModeManager:  ThemeModeManager(
-      themePersistent: initialPlatformDependencies.sharedPlatformPersistent,
-      savedThemeMode: initialPlatformDependencies.savedThemeModeStr,
-      platformBarController:
-      initialPlatformDependencies.platformBarController,
-    ),
-    child: ListenableBuilder(
-      listenable: ThemeModeScope.of(context),
-      builder: (final ctx, final child)=>MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeBuilder.getLightTheme(),
-        darkTheme: ThemeBuilder.getDarkTheme(),
-        themeMode: ThemeModeScope.of(context).themeMode,
-        home: const MyHomePage(title: 'Weather Demo App'),
-      ),
-    ),
-  );*/
+  const App();
 
   @override
-  Widget build(final BuildContext context) => ChangeNotifierProvider(
-        create: (final ctx) => ThemeModeManager(
-          themePersistent: initialPlatformDependencies.sharedPlatformPersistent,
-          savedThemeMode: initialPlatformDependencies.savedThemeModeStr,
-          platformBarController:
-              initialPlatformDependencies.platformBarController,
-        ),
-        child: Consumer<ThemeModeManager>(
-          builder: (
-            final ctx,
-            final themeModeManager,
-            final child,
-          ) =>
-              MaterialApp(
-            title: 'Flutter Demo',
-            theme: ThemeBuilder.getLightTheme(),
-            darkTheme: ThemeBuilder.getDarkTheme(),
-            themeMode: themeModeManager.themeMode,
-            home: const MyHomePage(title: 'Weather Demo App'),
-          ),
+  Widget build(final BuildContext context) => ListenableBuilder(
+        listenable: ThemeModeProvider.of(context),
+        builder: (final ctx, final _) => MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeBuilder.getLightTheme(),
+          darkTheme: ThemeBuilder.getDarkTheme(),
+          themeMode: ThemeModeProvider.of(ctx).themeMode,
+          home: const MyHomePage(title: 'Weather Demo App'),
         ),
       );
 }
@@ -95,24 +31,29 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  late ThemeModeManager _themeModeManager;
 
   void _incrementCounter() {
     setState(() {
       _counter++;
     });
-    final themeModeManager =
-        Provider.of<ThemeModeManager>(context, listen: false);
-    switch (themeModeManager.themeMode) {
+    switch (_themeModeManager.themeMode) {
       case ThemeMode.system:
-        themeModeManager.switchToDark();
+        _themeModeManager.switchToDark();
         break;
       case ThemeMode.light:
-        themeModeManager.switchToLight();
+        _themeModeManager.switchToLight();
         break;
       case ThemeMode.dark:
-        themeModeManager.switchToSystem();
+        _themeModeManager.switchToSystem();
         break;
     }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _themeModeManager = ThemeModeProvider.of(context);
   }
 
   @override

@@ -5,16 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:weather_app/app.dart';
 import 'package:weather_app/di/configurators/initial_platform_dependencies.dart';
+import 'package:weather_app/di/scopes/app_scope.dart';
 
 void main() => _bootstrap(
-      (final initialized, final platformDependencies) => App(
-        removeNativeSplash: initialized,
+      (final platformDependencies) => AppScope(
         initialPlatformDependencies: platformDependencies,
+        child: const App(),
       ),
     );
 
 Future<void> _bootstrap(
-  final Widget Function(VoidCallback, InitialPlatformDependencies) builder,
+  final Widget Function(InitialPlatformDependencies) builder,
 ) async {
   runZonedGuarded<void>(
     () async {
@@ -28,7 +29,7 @@ Future<void> _bootstrap(
       platformDependencies.platformBarController.setUpBarSplashStyle();
 
       //Bloc.observer = AppBlocObserver();
-      runApp(builder(() {}, platformDependencies));
+      runApp(builder(platformDependencies));
     },
     (final error, final stack) async {
       log(
