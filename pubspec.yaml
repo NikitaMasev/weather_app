@@ -19,7 +19,7 @@ dependencies:
   provider: ^6.1.2
 
   #Analytics
-  sentry_flutter: ^8.2.0
+  sentry_flutter: ^8.3.0
 
   #UI
   cupertino_icons: ^1.0.8

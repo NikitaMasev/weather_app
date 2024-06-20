@@ -1,4 +1,8 @@
 {
+  "dependInitFirst": "Первоначальная инициализация....",
+  "dependInitStore": "Инициализация хранилища....",
+  "dependInitUserRepo": "Создание пользовательского репозитория....",
+  "dependReady": "Готово!",
   "appName": "Просто Погода",
   "pressedButton": "Вы нажали кнопку уже вот столько раз: {value}",
   "hello": "Привет {userName}",

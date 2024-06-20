@@ -14,10 +14,11 @@ class ThemeModeProvider extends InheritedWidget {
       themeModeManager.themeMode != oldWidget.themeModeManager.themeMode;
 
   static ThemeModeManager of(final BuildContext context) {
-    final scope = context.dependOnInheritedWidgetOfExactType<ThemeModeProvider>();
+    final scope =
+        context.dependOnInheritedWidgetOfExactType<ThemeModeProvider>();
 
     if (scope == null) {
-      throw Exception('ThemeModeScope not founded');
+      throw Exception('ThemeModeProvider not founded');
     }
     return scope.themeModeManager;
   }

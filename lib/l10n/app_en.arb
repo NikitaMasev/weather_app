@@ -1,4 +1,8 @@
 {
+  "dependInitFirst": "Initialization....",
+  "dependInitStore": "Initialization store....",
+  "dependInitUserRepo": "Creating user repository....",
+  "dependReady": "Ready!",
   "appName": "Just A Weather",
   "pressedButton": "You have pushed the button this many times: {value}",
   "hello": "Hello {userName}",

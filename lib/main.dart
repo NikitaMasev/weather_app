@@ -10,7 +10,7 @@ import 'package:weather_app/di/scopes/app_scope.dart';
 void main() => _bootstrap(
       (final platformDependencies) => AppScope(
         initialPlatformDependencies: platformDependencies,
-        child: const App(),
+        child: App(platformDependencies),
       ),
     );
 

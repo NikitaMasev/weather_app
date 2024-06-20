@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:weather_app/di/configurators/app_dependencies_configurator.dart';
+import 'package:weather_app/di/configurators/initial_platform_dependencies.dart';
 import 'package:weather_app/di/providers/theme_mode_provider.dart';
+import 'package:weather_app/presentation/pages/start_flow/splash_page.dart';
 import 'package:weather_app/presentation/theming/theme_builder.dart';
 import 'package:weather_app/presentation/theming/theme_mode_extension.dart';
 import 'package:weather_app/presentation/theming/theme_mode_manager.dart';
 
 class App extends StatelessWidget {
-  const App();
+  const App(this.initialPlatformDependencies);
+
+  final InitialPlatformDependencies initialPlatformDependencies;
 
   @override
   Widget build(final BuildContext context) => ListenableBuilder(
@@ -18,7 +23,16 @@ class App extends StatelessWidget {
           themeMode: ThemeModeProvider.of(ctx).themeMode,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          home: const MyHomePage(),
+          home: Builder(
+            builder: (final ctxHome) => SplashPage(
+              appDependenciesConfigurator: AppDependenciesConfigurator(
+                env: initialPlatformDependencies.env,
+                sharedPlatformPersistentImpl:
+                    initialPlatformDependencies.sharedPlatformPersistent,
+                appLocalizations: AppLocalizations.of(ctxHome)!,
+              ),
+            ),
+          ),
         ),
       );
 }
@@ -89,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-             Text(
+            Text(
               AppLocalizations.of(context)!.pressedButton(_counter),
             ),
             Text(
