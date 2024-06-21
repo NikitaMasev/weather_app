@@ -67,7 +67,7 @@ final class AppDependenciesConfigurator {
       ),
     );
 
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(Duration(seconds: 2));
 
     _controllerDependenciesState.add(
       AppDependenciesLoading(
@@ -76,7 +76,7 @@ final class AppDependenciesConfigurator {
       ),
     );
 
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 3));
 
     _controllerDependenciesState.add(
       AppDependenciesLoading(
