@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/app.dart';
 import 'package:weather_app/di/configurators/app_dependencies_configurator.dart';
+import 'package:weather_app/di/providers/app_dependencies_provider.dart';
 import 'package:weather_app/presentation/widgets/anim/animated_logo.dart';
 import 'package:weather_app/presentation/widgets/anim/progress_loader_dependencies.dart';
 
@@ -25,6 +27,13 @@ class _SplashPageState extends State<SplashPage> {
       ///TODO If error initialization=>log and send to crashlytic
     }).then((final appDependencies) {
       ///TODO Navigate to next screen
+      AppDependenciesProvider.setUp(context, appDependencies);
+
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (final ctx) => const MyHomePage(),
+        ),
+      );
     });
   }
 

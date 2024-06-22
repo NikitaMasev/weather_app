@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:weather_app/di/configurators/app_dependencies_configurator.dart';
 import 'package:weather_app/di/configurators/initial_platform_dependencies.dart';
+import 'package:weather_app/di/notifiers/theme_mode_manager.dart';
+import 'package:weather_app/di/providers/app_dependencies_provider.dart';
 import 'package:weather_app/di/providers/theme_mode_provider.dart';
 import 'package:weather_app/presentation/pages/start_flow/splash_page.dart';
 import 'package:weather_app/presentation/theming/theme_builder.dart';
 import 'package:weather_app/presentation/theming/theme_mode_extension.dart';
-import 'package:weather_app/presentation/theming/theme_mode_manager.dart';
 
 class App extends StatelessWidget {
   const App(this.initialPlatformDependencies);
@@ -69,6 +70,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _themeModeManager = ThemeModeProvider.of(context);
+    final app = AppDependenciesProvider.of(context);
+    print(app);
   }
 
   @override

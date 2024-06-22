@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/presentation/theming/theme_mode_manager.dart';
+import 'package:weather_app/di/notifiers/theme_mode_manager.dart';
 
 class ThemeModeProvider extends InheritedWidget {
   const ThemeModeProvider({
