@@ -26,7 +26,6 @@ class _SplashPageState extends State<SplashPage> {
         .catchError((final err) {
       ///TODO If error initialization=>log and send to crashlytic
     }).then((final appDependencies) {
-      ///TODO Navigate to next screen
       AppDependenciesProvider.setUp(context, appDependencies);
 
       Navigator.of(context).pushReplacement(
