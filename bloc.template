@@ -1,0 +1,22 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:$IMPORT_EVENTS_STATES$';
+
+class $FILE_NAME$Bloc extends Bloc<$FILE_NAME$Event, $FILE_NAME$State> {
+  $FILE_NAME$Bloc({
+    required this.$FILE_NAME_VAR$Repository,
+  }) : super(const $FILE_NAME$State.initial()) {
+    on<$FILE_NAME$Event>(
+      (final event, final emit) => switch(event) {
+		$FILE_NAME$EventStart() => _start(emit),
+	  },
+    );
+  }
+
+  final $FILE_NAME$Repository $FILE_NAME_VAR$Repository;
+
+  Future<void> _start(
+    final Emitter<$FILE_NAME$State> emit,
+  ) async {
+    emit(const $FILE_NAME$State.loading());
+  }
+}

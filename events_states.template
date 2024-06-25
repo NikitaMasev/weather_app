@@ -1,0 +1,35 @@
+sealed class $FILE_NAME$State {
+  factory $FILE_NAME$State.initial() => $FILE_NAME$StateInitial();
+
+  factory $FILE_NAME$State.loading() => $FILE_NAME$StateLoading();
+
+  factory $FILE_NAME$State.success({
+    required final String data,
+  }) => $FILE_NAME$StateSuccess(data: data);
+
+  factory $FILE_NAME$State.error({
+    required final String err,
+  }) => $FILE_NAME$StateError(err: err);
+}
+
+final class $FILE_NAME$StateInitial implements $FILE_NAME$State {}
+
+final class $FILE_NAME$StateLoading implements $FILE_NAME$State {}
+
+final class $FILE_NAME$StateError implements $FILE_NAME$State {
+  $FILE_NAME$StateError({required this.err});
+
+  final String err;
+}
+
+final class $FILE_NAME$StateSuccess implements $FILE_NAME$State {
+  $FILE_NAME$StateSuccess({required this.data});
+
+  final String data;
+}
+
+sealed class $FILE_NAME$Event {
+  factory $FILE_NAME$Event.start() => $FILE_NAME$EventStart();
+}
+
+final class $FILE_NAME$EventStart implements $FILE_NAME$Event {}
