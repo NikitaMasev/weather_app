@@ -15,14 +15,26 @@ class AppDependenciesProvider extends InheritedWidget {
       appDependenciesManager.getAppDependencies !=
       oldWidget.appDependenciesManager.getAppDependencies;
 
-  static AppDependenciesProvider provider(final BuildContext context) {
-    final scope =
-        context.dependOnInheritedWidgetOfExactType<AppDependenciesProvider>();
-
-    if (scope == null) {
-      throw Exception('AppDependenciesProvider not founded!');
+  static AppDependenciesProvider provider(
+    final BuildContext context, {
+    final bool listen = true,
+  }) {
+    if (listen) {
+      final provider =
+          context.dependOnInheritedWidgetOfExactType<AppDependenciesProvider>();
+      if (provider == null) {
+        throw Exception('AppDependenciesProvider not founded!');
+      }
+      return provider;
+    } else {
+      final element = context
+          .getElementForInheritedWidgetOfExactType<AppDependenciesProvider>();
+      if (element == null) {
+        throw Exception('AppDependenciesProvider as inherited'
+            ' element not founded!');
+      }
+      return element.widget as AppDependenciesProvider;
     }
-    return scope;
   }
 
   ///Must call after initialization [appDependencies] in splash page

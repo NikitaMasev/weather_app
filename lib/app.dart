@@ -49,6 +49,13 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   late ThemeModeManager _themeModeManager;
 
+  @override
+  void initState() {
+    super.initState();
+    final app = AppDependenciesProvider.provider(context, listen: false);
+    print(app);
+  }
+
   void _incrementCounter() {
     setState(() {
       _counter++;
@@ -70,8 +77,6 @@ class _MyHomePageState extends State<MyHomePage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _themeModeManager = ThemeModeProvider.of(context);
-    final app = AppDependenciesProvider.of(context);
-    print(app);
   }
 
   @override

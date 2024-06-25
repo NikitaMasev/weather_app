@@ -13,6 +13,7 @@ watch:
 gen:
 	@echo "Building the project..."
 	@dart run build_runner build --delete-conflicting-outputs
+	@dart run icons_launcher:create --path icons_launcher.yaml
 
 upgrade: clean
 	@echo "Upgrading dependencies..."
