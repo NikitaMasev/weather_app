@@ -1,18 +1,104 @@
 import 'dart:io';
 
+const _packageAppName = 'weather_app';
+const _directoryLibDomain = 'lib/domain/';
+const _blocSuffix = '_bloc';
+
 const _extensionDart = '.dart';
 const _filePathEventsStatesTemplate = 'events_states.template';
 const _filePathBlocTemplate = 'bloc.template';
 const _fileNameEvensStates = 'events_states$_extensionDart';
-
-const _packageApp = 'weather_app';
-const _directoryDomain = 'lib/domain/';
 
 const _substitutionTemplateFeatureName = r'$FILE_NAME$';
 const _substitutionTemplateFeatureNameVar = r'$FILE_NAME_VAR$';
 const _substitutionTemplateImportEventsStates = r'$IMPORT_EVENTS_STATES$';
 
 Future<void> main([final List<String>? args]) async {
+  _checkArgs(args);
+
+  final blocNameUndescore = args!.first;
+  final nameFeatureUndescore = blocNameUndescore.replaceFirst(_blocSuffix, '');
+  final nameFeatureCamelCase = _fromUndescoreToCamelCase(nameFeatureUndescore);
+
+  final dirDomainFeature = await _createDomainFeatureDir(
+    '$_directoryLibDomain$nameFeatureUndescore',
+  );
+
+  await _createFileByTemplate(
+    filePathTemplate: _filePathEventsStatesTemplate,
+    filePathOutput: '${dirDomainFeature.path}/$_fileNameEvensStates',
+    substitutionData: {
+      _substitutionTemplateFeatureName: nameFeatureCamelCase,
+    },
+  );
+
+  final substitutionImportEventStates =
+      '$_packageAppName${_directoryLibDomain.replaceFirst(
+    'lib',
+    '',
+  )}/$nameFeatureUndescore/$_fileNameEvensStates';
+
+  final substitutionVarBloc =
+      '${nameFeatureCamelCase.substring(0, 1).toLowerCase()}'
+      '${nameFeatureCamelCase.substring(1)}';
+
+  await _createFileByTemplate(
+    filePathTemplate: _filePathBlocTemplate,
+    filePathOutput: '${dirDomainFeature.path}/$blocNameUndescore$_extensionDart',
+    substitutionData:  {
+      _substitutionTemplateFeatureName: nameFeatureCamelCase,
+      _substitutionTemplateImportEventsStates: substitutionImportEventStates,
+      _substitutionTemplateFeatureNameVar: substitutionVarBloc,
+    },
+  );
+}
+
+Future<void> _createFileByTemplate({
+  required final String filePathTemplate,
+  required final String filePathOutput,
+  required final Map<String, String> substitutionData,
+}) async {
+  final fileEventsStatesTemplate = File(filePathTemplate);
+  if (!fileEventsStatesTemplate.existsSync()) {
+    throw Exception('$filePathTemplate not founded!');
+  }
+
+  final templateDataEventsStates = fileEventsStatesTemplate.readAsLinesSync();
+
+  if (templateDataEventsStates.isEmpty) {
+    throw Exception('$filePathTemplate are empty!');
+  }
+
+  final enrichedDataEventsStates = _enrichTemplate(
+    templateDataEventsStates,
+    substitutionData,
+  );
+
+  final fileEnrichedEventsStates = File(filePathOutput)..createSync();
+  await fileEnrichedEventsStates.writeAsString(enrichedDataEventsStates);
+}
+
+String _enrichTemplate(
+  final List<String> templateLines,
+  final Map<String, String> substitutionData,
+) {
+  final sb = StringBuffer();
+  for (final lineTemplate in templateLines) {
+    var lineCandidate = lineTemplate;
+
+    for (final patternValue in substitutionData.entries) {
+      lineCandidate = lineCandidate.replaceAll(
+        patternValue.key,
+        patternValue.value,
+      );
+    }
+
+    sb.writeln(lineCandidate);
+  }
+  return sb.toString();
+}
+
+void _checkArgs([final List<String>? args]) {
   if (args == null || args.isEmpty) {
     throw Exception('Not valid arguments.'
         ' Use commands "dart bloc_creator.dart name_bloc".');
@@ -22,88 +108,19 @@ Future<void> main([final List<String>? args]) async {
         ' There are demand only one argument.');
   }
 
-  final blocNameUndescore = args.first;
-  final nameFeatureUndescore = blocNameUndescore.replaceFirst('_bloc', '');
-  final dirBloc = Directory('$_directoryDomain$nameFeatureUndescore');
-
-  if (!dirBloc.existsSync()) {
-    dirBloc.createSync(recursive: true);
+  if (!args.first.contains(_blocSuffix)) {
+    throw Exception('Not valid arguments.'
+        ' Name must contain "bloc" suffix, like auth_bloc.');
   }
+}
 
-  final fileEventsStatesTemplate = File(_filePathEventsStatesTemplate);
-  if (!fileEventsStatesTemplate.existsSync()) {
-    throw Exception('$_filePathEventsStatesTemplate not founded!');
+Future<Directory> _createDomainFeatureDir(final String path) async {
+  final dirDomainFeature = Directory(path);
+
+  if (!dirDomainFeature.existsSync()) {
+    await dirDomainFeature.create(recursive: true);
   }
-
-  final templateDataEventsStates = fileEventsStatesTemplate.readAsLinesSync();
-
-  if (templateDataEventsStates.isEmpty) {
-    throw Exception('$_filePathEventsStatesTemplate are empty!');
-  }
-
-  final nameFeatureCamelCase = _fromUndescoreToCamelCase(nameFeatureUndescore);
-
-  final enrichedDataEventsStates = templateDataEventsStates
-      .map(
-        (final line) => line.replaceAll(
-          _substitutionTemplateFeatureName,
-          nameFeatureCamelCase,
-        ),
-      )
-      .join('\n');
-
-  final filePathEnrichedEventsStates = '${dirBloc.path}/$_fileNameEvensStates';
-  final fileEnrichedEventsStates = File(filePathEnrichedEventsStates)
-    ..createSync();
-  await fileEnrichedEventsStates.writeAsString(enrichedDataEventsStates);
-
-  final fileBlocTemplate = File(_filePathBlocTemplate);
-
-  if (!fileBlocTemplate.existsSync()) {
-    throw Exception('$_filePathBlocTemplate not founded!');
-  }
-
-  final templateDataBloc = fileBlocTemplate.readAsLinesSync();
-  if (templateDataBloc.isEmpty) {
-    throw Exception('$_filePathBlocTemplate are empty!');
-  }
-
-  final substitutionImportEventStates =
-      '$_packageApp${filePathEnrichedEventsStates.replaceFirst(
-    'lib',
-    '',
-  )}';
-
-  final substitutionVarBloc =
-      '${nameFeatureCamelCase.substring(0, 1).toLowerCase()}'
-      '${nameFeatureCamelCase.substring(1)}';
-
-  final enrichedDataBloc = templateDataBloc
-      .map<String>(
-        (final line) => line.replaceAll(
-          _substitutionTemplateFeatureName,
-          nameFeatureCamelCase,
-        ),
-      )
-      .map<String>(
-        (final line) => line.replaceFirst(
-          _substitutionTemplateImportEventsStates,
-          substitutionImportEventStates,
-        ),
-      )
-      .map<String>(
-        (final line) => line.replaceFirst(
-          _substitutionTemplateFeatureNameVar,
-          substitutionVarBloc,
-        ),
-      )
-      .join('\n');
-
-  final fileEnrichedBloc =
-      File('${dirBloc.path}/$blocNameUndescore$_extensionDart')..createSync();
-  await fileEnrichedBloc.writeAsString(enrichedDataBloc);
-
-  //final fileBloc = File('${dirBloc.path}/$blocNameUndescore$_extension').createSync();
+  return dirDomainFeature;
 }
 
 String _fromUndescoreToCamelCase(final String undescore) {
