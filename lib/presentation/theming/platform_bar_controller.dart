@@ -6,11 +6,17 @@ final class PlatformBarController {
   PlatformBarController({
     required final Color colorBarLightTheme,
     required final Color colorBarDarkTheme,
+    required final Color colorHomeBarLightTheme,
+    required final Color colorHomeBarDarkTheme,
   })  : _colorBarDarkTheme = colorBarDarkTheme,
-        _colorBarLightTheme = colorBarLightTheme;
+        _colorBarLightTheme = colorBarLightTheme,
+        _colorHomeBarLightTheme = colorHomeBarLightTheme,
+        _colorHomeBarDarkTheme = colorHomeBarDarkTheme;
 
   final Color _colorBarLightTheme;
   final Color _colorBarDarkTheme;
+  final Color _colorHomeBarLightTheme;
+  final Color _colorHomeBarDarkTheme;
 
   bool isLightPlatformTheme() {
     final brightness =
@@ -84,6 +90,30 @@ final class PlatformBarController {
           statusBarBrightness: Brightness.dark,
           statusBarIconBrightness: Brightness.light,
           systemNavigationBarColor: _colorBarDarkTheme,
+          systemNavigationBarIconBrightness: Brightness.light,
+        ),
+      );
+    }
+  }
+
+  void setUpBarHomeStyle() {
+    if (isLightPlatformTheme()) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarBrightness: Brightness.light,
+          statusBarIconBrightness: Brightness.dark,
+          systemNavigationBarColor: _colorHomeBarLightTheme,
+          systemNavigationBarIconBrightness: Brightness.dark,
+        ),
+      );
+    } else {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarBrightness: Brightness.dark,
+          statusBarIconBrightness: Brightness.light,
+          systemNavigationBarColor: _colorHomeBarDarkTheme,
           systemNavigationBarIconBrightness: Brightness.light,
         ),
       );

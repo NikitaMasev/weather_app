@@ -12,8 +12,7 @@ class AppDependenciesProvider extends InheritedWidget {
 
   @override
   bool updateShouldNotify(covariant final AppDependenciesProvider oldWidget) =>
-      appDependenciesManager.getAppDependencies !=
-      oldWidget.appDependenciesManager.getAppDependencies;
+      false;
 
   static AppDependenciesProvider provider(
     final BuildContext context, {
@@ -46,8 +45,11 @@ class AppDependenciesProvider extends InheritedWidget {
     scope.appDependenciesManager.setUp(appDependencies);
   }
 
-  static AppDependencies of(final BuildContext context) {
-    final scope = provider(context);
+  static AppDependencies of(
+    final BuildContext context, {
+    final bool listen = true,
+  }) {
+    final scope = provider(context, listen: listen);
 
     return scope.appDependenciesManager.getAppDependencies;
   }

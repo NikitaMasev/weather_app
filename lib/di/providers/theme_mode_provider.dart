@@ -13,13 +13,34 @@ class ThemeModeProvider extends InheritedWidget {
   bool updateShouldNotify(covariant final ThemeModeProvider oldWidget) =>
       themeModeManager.themeMode != oldWidget.themeModeManager.themeMode;
 
-  static ThemeModeManager of(final BuildContext context) {
-    final scope =
-        context.dependOnInheritedWidgetOfExactType<ThemeModeProvider>();
-
-    if (scope == null) {
-      throw Exception('ThemeModeProvider not founded');
+  static ThemeModeProvider provider(
+    final BuildContext context, {
+    final bool listen = true,
+  }) {
+    if (listen) {
+      final provider =
+          context.dependOnInheritedWidgetOfExactType<ThemeModeProvider>();
+      if (provider == null) {
+        throw Exception('ThemeModeManager not founded!');
+      }
+      return provider;
+    } else {
+      final element =
+          context.getElementForInheritedWidgetOfExactType<ThemeModeProvider>();
+      if (element == null) {
+        throw Exception('ThemeModeProvider as inherited'
+            ' element not founded!');
+      }
+      return element.widget as ThemeModeProvider;
     }
+  }
+
+  static ThemeModeManager of(
+    final BuildContext context, {
+    final bool listen = true,
+  }) {
+    final scope = provider(context, listen: listen);
+
     return scope.themeModeManager;
   }
 }

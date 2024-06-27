@@ -46,6 +46,10 @@ final class ThemeModeManager extends ChangeNotifier {
     }
   }
 
+  void setUpBarHomeStyle() {
+    _platformBarController.setUpBarHomeStyle();
+  }
+
   void _updateThemeMode() {
     notifyListeners();
     _themePersistent.saveThemeMode(themeMode.serialize());

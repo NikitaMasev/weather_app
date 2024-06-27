@@ -67,7 +67,7 @@ final class AppDependenciesConfigurator {
       ),
     );
 
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(milliseconds: 300));
 
     _controllerDependenciesState.add(
       AppDependenciesLoading(
@@ -76,7 +76,7 @@ final class AppDependenciesConfigurator {
       ),
     );
 
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 1));
 
     _controllerDependenciesState.add(
       AppDependenciesLoading(
@@ -85,7 +85,7 @@ final class AppDependenciesConfigurator {
       ),
     );
 
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(Duration(milliseconds: 100));
 
     _controllerDependenciesState.add(
       AppDependenciesLoading(
@@ -94,10 +94,10 @@ final class AppDependenciesConfigurator {
       ),
     );
 
-    final appDependencies = AppDependencies();
+    final appDependencies = AppDependencies(data: 1);
 
     _controllerDependenciesState.add(
-      AppDependenciesSuccess(appDependencies: AppDependencies()),
+      AppDependenciesSuccess(appDependencies: AppDependencies(data: 1)),
     );
 
     return appDependencies;

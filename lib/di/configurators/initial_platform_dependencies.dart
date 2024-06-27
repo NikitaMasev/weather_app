@@ -33,6 +33,8 @@ class InitialPlatformDependencies {
     final platformBarController = PlatformBarController(
       colorBarLightTheme: lightTheme.colorScheme.surface,
       colorBarDarkTheme: darkTheme.colorScheme.surface,
+      colorHomeBarLightTheme: lightTheme.colorScheme.surfaceContainer,
+      colorHomeBarDarkTheme: darkTheme.colorScheme.surfaceContainer,
     );
 
     final env = Env.parse(

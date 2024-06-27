@@ -15,7 +15,7 @@ class ProgressDescriptionAnimation extends StatelessWidget {
         children: [
           TweenAnimationBuilder(
             curve: Curves.easeInOut,
-            duration: const Duration(seconds: 1),
+            duration: const Duration(milliseconds: 600),
             tween: animationProgressIndicator,
             builder: (
               final ctx,
