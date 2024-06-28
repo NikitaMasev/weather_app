@@ -1,4 +1,7 @@
 {
+  "navTabWeatherText": "Сейчас",
+  "navTabHistoryText": "История",
+  "navTabSettingsText": "Настройки",
   "dependInitFirst": "Первоначальная инициализация....",
   "dependInitStore": "Инициализация хранилища....",
   "dependInitUserRepo": "Создание пользовательского репозитория....",

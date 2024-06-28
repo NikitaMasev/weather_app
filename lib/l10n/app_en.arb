@@ -1,4 +1,7 @@
 {
+  "navTabWeatherText": "Current",
+  "navTabHistoryText": "History",
+  "navTabSettingsText": "Setting",
   "dependInitFirst": "Initialization....",
   "dependInitStore": "Initialization store....",
   "dependInitUserRepo": "Creating user repository....",

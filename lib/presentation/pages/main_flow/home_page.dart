@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:weather_app/di/providers/theme_mode_provider.dart';
+import 'package:weather_app/presentation/assets_paths/assets.gen.dart';
 import 'package:weather_app/presentation/pages/recent_search_flow/recent_search_page.dart';
 import 'package:weather_app/presentation/pages/settings_flow/settings_flow.dart';
 import 'package:weather_app/presentation/pages/weather_flow/current_weather_flow.dart';
+
+const _navBarIconSize = 32.0;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,6 +18,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late final PageController _pageController;
+  var _navBarControl = false;
   var _selectedTabIndex = 0;
 
   @override
@@ -40,21 +45,30 @@ class _HomePageState extends State<HomePage> {
       .currentState
       ?.pop(_navigatorKeys[_selectedTabIndex].currentContext);
 
-  void _onPageViewSwiped(final int index) => setState(
-        () => _selectedTabIndex = index,
-      );
+  void _onPageViewSwiped(final int index) {
+    if (_navBarControl) {
+      return;
+    }
+    setState(
+      () => _selectedTabIndex = index,
+    );
+  }
 
   void _onBottomNavBarSelected(final int index) {
     if (index == _selectedTabIndex &&
         _navigatorKeys[_selectedTabIndex].currentState!.canPop()) {
       _popCurrentTabToRoot();
     } else {
+      _navBarControl = true;
       _selectedTabIndex = index;
+
       _pageController.animateToPage(
         _selectedTabIndex,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeIn,
-      );
+      ).then((final _) {
+        _navBarControl = false;
+      });
       setState(() {});
     }
   }
@@ -76,18 +90,27 @@ class _HomePageState extends State<HomePage> {
           bottomNavigationBar: NavigationBar(
             selectedIndex: _selectedTabIndex,
             onDestinationSelected: _onBottomNavBarSelected,
-            destinations: const [
+            destinations: [
               NavigationDestination(
-                icon: Icon(Icons.person),
-                label: '1 tab',
+                icon: Assets.svg.weather.svg(width: _navBarIconSize),
+                selectedIcon: Assets.svg.weatherActive.svg(
+                  width: _navBarIconSize,
+                ),
+                label: AppLocalizations.of(context)!.navTabWeatherText,
               ),
               NavigationDestination(
-                icon: Icon(Icons.ac_unit),
-                label: '2 tab',
+                icon: Assets.svg.history.svg(width: _navBarIconSize),
+                selectedIcon: Assets.svg.historyActive.svg(
+                  width: _navBarIconSize,
+                ),
+                label: AppLocalizations.of(context)!.navTabHistoryText,
               ),
               NavigationDestination(
-                icon: Icon(Icons.settings),
-                label: '3 tab',
+                icon: Assets.svg.settings.svg(width: _navBarIconSize),
+                selectedIcon: Assets.svg.settingsActive.svg(
+                  width: _navBarIconSize,
+                ),
+                label: AppLocalizations.of(context)!.navTabSettingsText,
               ),
             ],
           ),

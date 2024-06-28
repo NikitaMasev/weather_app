@@ -1,4 +1,4 @@
-.PHONY: clean watch gen upgrade run_dev_mobile_debug run_prod_mobile_debug run_prod_mobile_release build_dev_mobile_debug build_prod_mobile_debug build_prod_mobile_release
+.PHONY: clean watch gen genAll upgrade run_dev_mobile_debug run_prod_mobile_debug run_prod_mobile_release build_dev_mobile_debug build_prod_mobile_debug build_prod_mobile_release
 
 clean:
 	@echo "Cleaning the project..."
@@ -11,6 +11,10 @@ watch:
 	@dart run build_runner watch --delete-conflicting-outputs
 
 gen:
+	@echo "Building the project..."
+	@dart run build_runner build --delete-conflicting-outputs
+
+genAll:
 	@echo "Building the project..."
 	@dart run build_runner build --delete-conflicting-outputs
 	@dart run icons_launcher:create --path icons_launcher.yaml
