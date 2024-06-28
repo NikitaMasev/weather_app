@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:weather_app/di/providers/theme_mode_provider.dart';
-import 'package:weather_app/presentation/pages/main_flow/current_weather_flow.dart';
-import 'package:weather_app/presentation/pages/main_flow/recent_search_page.dart';
-import 'package:weather_app/presentation/pages/main_flow/settings_flow.dart';
+import 'package:weather_app/presentation/pages/recent_search_flow/recent_search_page.dart';
+import 'package:weather_app/presentation/pages/settings_flow/settings_flow.dart';
+import 'package:weather_app/presentation/pages/weather_flow/current_weather_flow.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -32,7 +32,6 @@ class _HomePageState extends State<HomePage> {
     if (_navigatorKeys[_selectedTabIndex].currentState!.canPop()) {
       _popCurrentTabToRoot();
     } else {
-      print('EXIT');
       SystemChannels.platform.invokeMethod<void>('SystemNavigator.pop');
     }
   }

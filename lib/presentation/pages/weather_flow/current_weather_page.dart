@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/presentation/pages/shared_pages/detail_page.dart';
 
 class CurrentWeatherPage extends StatelessWidget {
   const CurrentWeatherPage({super.key});
@@ -15,7 +16,7 @@ class CurrentWeatherPage extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/detail');
+                  Navigator.pushNamed(context, DetailPage.routePath);
                 },
                 child: Text('to nested page'),
               ),

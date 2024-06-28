@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/di/configurators/app_dependencies_configurator.dart';
 import 'package:weather_app/di/providers/app_dependencies_provider.dart';
-import 'package:weather_app/presentation/pages/main_flow/home_page.dart';
+import 'package:weather_app/presentation/navigation/routes/home_route.dart';
 import 'package:weather_app/presentation/widgets/anim/animated_logo.dart';
 import 'package:weather_app/presentation/widgets/anim/progress_loader_dependencies.dart';
 
@@ -28,11 +28,9 @@ class _SplashPageState extends State<SplashPage> {
     }).then((final appDependencies) {
       AppDependenciesProvider.setUp(context, appDependencies);
 
-      Future.delayed(const Duration(seconds: 1),() {
+      Future.delayed(const Duration(seconds: 1), () {
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (final ctx) => const HomePage(),
-          ),
+          HomeRoute.create(),
         );
       });
     });
