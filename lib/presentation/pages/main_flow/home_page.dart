@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:weather_app/di/providers/theme_mode_provider.dart';
-import 'package:weather_app/presentation/assets_paths/assets.gen.dart';
 import 'package:weather_app/presentation/pages/recent_search_flow/recent_search_page.dart';
 import 'package:weather_app/presentation/pages/settings_flow/settings_flow.dart';
 import 'package:weather_app/presentation/pages/weather_flow/current_weather_flow.dart';
+import 'package:weather_app/presentation/widgets/home/scaffold_home_nav_bar.dart';
+import 'package:weather_app/presentation/widgets/home/scaffold_home_nav_rail.dart';
 
 const _navBarIconSize = 32.0;
 
@@ -62,11 +62,13 @@ class _HomePageState extends State<HomePage> {
       _navBarControl = true;
       _selectedTabIndex = index;
 
-      _pageController.animateToPage(
+      _pageController
+          .animateToPage(
         _selectedTabIndex,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeIn,
-      ).then((final _) {
+      )
+          .then((final _) {
         _navBarControl = false;
       });
       setState(() {});
@@ -74,46 +76,36 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  Widget build(final BuildContext context) => PopScope(
-        canPop: false,
-        onPopInvoked: _backBtnPressed,
-        child: Scaffold(
-          body: PageView(
-            controller: _pageController,
-            onPageChanged: _onPageViewSwiped,
-            children: [
-              CurrentWeatherFlow(navigatorKey: _navigatorKeys[0]),
-              RecentSearchPage(),
-              SettingsFlow(navigatorKey: _navigatorKeys[2]),
-            ],
-          ),
-          bottomNavigationBar: NavigationBar(
-            selectedIndex: _selectedTabIndex,
-            onDestinationSelected: _onBottomNavBarSelected,
-            destinations: [
-              NavigationDestination(
-                icon: Assets.svg.weather.svg(width: _navBarIconSize),
-                selectedIcon: Assets.svg.weatherActive.svg(
-                  width: _navBarIconSize,
-                ),
-                label: AppLocalizations.of(context)!.navTabWeatherText,
-              ),
-              NavigationDestination(
-                icon: Assets.svg.history.svg(width: _navBarIconSize),
-                selectedIcon: Assets.svg.historyActive.svg(
-                  width: _navBarIconSize,
-                ),
-                label: AppLocalizations.of(context)!.navTabHistoryText,
-              ),
-              NavigationDestination(
-                icon: Assets.svg.settings.svg(width: _navBarIconSize),
-                selectedIcon: Assets.svg.settingsActive.svg(
-                  width: _navBarIconSize,
-                ),
-                label: AppLocalizations.of(context)!.navTabSettingsText,
-              ),
-            ],
-          ),
-        ),
-      );
+  Widget build(final BuildContext context) {
+    final body = PageView(
+      controller: _pageController,
+      onPageChanged: _onPageViewSwiped,
+      children: [
+        CurrentWeatherFlow(navigatorKey: _navigatorKeys[0]),
+        RecentSearchPage(),
+        SettingsFlow(navigatorKey: _navigatorKeys[2]),
+      ],
+    );
+    return PopScope(
+      canPop: false,
+      onPopInvoked: _backBtnPressed,
+      child: LayoutBuilder(
+        builder: (final ctx, final constraints) =>
+            switch (constraints.maxWidth) {
+          < 450.0 => ScaffoldHomeNavBar(
+              body: body,
+              selectedIndex: _selectedTabIndex,
+              onDestinationSelected: _onBottomNavBarSelected,
+              iconSize: _navBarIconSize,
+            ),
+          _ => ScaffoldHomeNavRail(
+              body: body,
+              selectedIndex: _selectedTabIndex,
+              onDestinationSelected: _onBottomNavBarSelected,
+              iconSize: _navBarIconSize,
+            )
+        },
+      ),
+    );
+  }
 }
