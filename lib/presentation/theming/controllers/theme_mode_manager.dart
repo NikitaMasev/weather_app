@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/data/sources/shared/theme_persistent.dart';
-import 'package:weather_app/presentation/theming/platform_bar_controller.dart';
-import 'package:weather_app/presentation/theming/theme_mode_extension_stringer.dart';
+import 'package:weather_app/presentation/theming/controllers/platform_bar_controller.dart';
+import 'package:weather_app/presentation/theming/ext/theme_mode_extension_stringer.dart';
 
 final class ThemeModeManager extends ChangeNotifier {
   ThemeModeManager({

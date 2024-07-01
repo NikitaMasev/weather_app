@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/data/sources/shared/shared_platform_persistent_impl.dart';
 import 'package:weather_app/di/models/environments.dart';
-import 'package:weather_app/presentation/theming/platform_bar_controller.dart';
-import 'package:weather_app/presentation/theming/theme_builder.dart';
+import 'package:weather_app/presentation/theming/controllers/platform_bar_controller.dart';
+import 'package:weather_app/presentation/theming/models/theme_builder.dart';
 
 class InitialPlatformDependencies {
   InitialPlatformDependencies._({

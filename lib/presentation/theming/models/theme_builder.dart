@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/presentation/theming/extra_color.dart';
+import 'package:weather_app/presentation/theming/models/extra_color.dart';
 
 ///TODO TextTheme
 sealed class ThemeBuilder {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/di/configurators/initial_platform_dependencies.dart';
 import 'package:weather_app/di/notifiers/app_dependencies_manager.dart';
-import 'package:weather_app/di/notifiers/theme_mode_manager.dart';
 import 'package:weather_app/di/providers/app_dependencies_provider.dart';
 import 'package:weather_app/di/providers/theme_mode_provider.dart';
+import 'package:weather_app/presentation/theming/controllers/theme_mode_manager.dart';
 
 class AppScope extends StatelessWidget {
   const AppScope({
