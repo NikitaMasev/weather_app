@@ -12,13 +12,9 @@ class App extends StatelessWidget {
   final InitialPlatformDependencies initialPlatformDependencies;
 
   @override
-  Widget build(final BuildContext context) {
-    print('BUILD App');
-    return ListenableBuilder(
+  Widget build(final BuildContext context) => ListenableBuilder(
         listenable: ThemeModeProvider.of(context),
-        builder: (final ctx, final _) {
-          print('BUILD ListenableBuilder');
-          return MaterialApp(
+        builder: (final ctx, final _) => MaterialApp(
           title: 'Flutter Demo',
           theme: ThemeBuilder.getLightTheme(),
           darkTheme: ThemeBuilder.getDarkTheme(),
@@ -26,20 +22,15 @@ class App extends StatelessWidget {
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           home: Builder(
-            builder: (final ctxHome) {
-              print('BUILD internal Builder');
-              return SplashPage(
+            builder: (final ctxHome) => SplashPage(
               appDependenciesConfigurator: AppDependenciesConfigurator(
                 env: initialPlatformDependencies.env,
                 sharedPlatformPersistentImpl:
                     initialPlatformDependencies.sharedPlatformPersistent,
                 appLocalizations: AppLocalizations.of(ctxHome)!,
               ),
-            );
-            },
+            ),
           ),
-        );
-        },
+        ),
       );
-  }
 }

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:weather_app/di/configurators/app_dependencies_configurator.dart';
-import 'package:weather_app/di/providers/theme_mode_provider.dart';
+import 'package:weather_app/di/providers/app_dependencies_provider.dart';
 import 'package:weather_app/presentation/navigation/routes/home_transition_route.dart';
 import 'package:weather_app/presentation/pages/main_flow/home_page.dart';
-import 'package:weather_app/presentation/theming/ext/theme_mode_extension.dart';
 import 'package:weather_app/presentation/widgets/anim/animated_logo.dart';
 import 'package:weather_app/presentation/widgets/anim/progress_loader_dependencies.dart';
 
@@ -30,25 +28,12 @@ class _SplashPageState extends State<SplashPage> {
         .catchError((final err) {
       ///TODO If error initialization=>log and send to crashlytic
     }).then((final appDependencies) {
-      //AppDependenciesProvider.setUp(context, appDependencies);
+      AppDependenciesProvider.setUp(context, appDependencies);
 
       Future.delayed(const Duration(seconds: 5), () {
-        final themeManager = ThemeModeProvider.of(context);
-        print(themeManager.themeMode);
-        switch(themeManager.themeMode) {
-          case ThemeMode.system:
-            themeManager.switchToDark();
-            break;
-          case ThemeMode.light:
-            themeManager.switchToDark();
-            break;
-          case ThemeMode.dark:
-            themeManager.switchToLight();
-            break;
-        }
-/*        Navigator.of(context).pushReplacement(
+        Navigator.of(context).pushReplacement(
           HomeTransitionRoute(child: const HomePage()),
-        );*/
+        );
       });
     });
   }
