@@ -8,6 +8,7 @@ class ScaffoldHomeNavBar extends StatelessWidget {
     required this.selectedIndex,
     required this.onDestinationSelected,
     required this.iconSize,
+    required this.appBar,
     super.key,
   });
 
@@ -15,10 +16,12 @@ class ScaffoldHomeNavBar extends StatelessWidget {
   final int selectedIndex;
   final ValueChanged<int> onDestinationSelected;
   final double iconSize;
+  final AppBar appBar;
 
   @override
   Widget build(final BuildContext context) => Scaffold(
       body: body,
+      appBar: appBar,
       bottomNavigationBar: NavigationBar(
         selectedIndex: selectedIndex,
         onDestinationSelected: onDestinationSelected,

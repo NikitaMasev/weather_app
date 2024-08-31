@@ -77,6 +77,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(final BuildContext context) {
+    final theme = Theme.of(context);
     final body = PageView(
       controller: _pageController,
       onPageChanged: _onPageViewSwiped,
@@ -97,6 +98,19 @@ class _HomePageState extends State<HomePage> {
               selectedIndex: _selectedTabIndex,
               onDestinationSelected: _onBottomNavBarSelected,
               iconSize: _navBarIconSize,
+            appBar: AppBar(
+              systemOverlayStyle: SystemUiOverlayStyle(
+                statusBarColor: Colors.transparent,
+                systemNavigationBarColor: theme.colorScheme.surfaceContainer,
+                statusBarIconBrightness: theme.brightness == Brightness.light
+                    ? Brightness.dark
+                    : Brightness.light,
+                systemNavigationBarIconBrightness:
+                theme.brightness == Brightness.light
+                    ? Brightness.dark
+                    : Brightness.light,
+              ),
+            ),
             ),
           _ => ScaffoldHomeNavRail(
               body: body,

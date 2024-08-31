@@ -25,7 +25,7 @@ final class PlatformBarController {
   }
 
   void forceSetUpBarDarkStyle() {
-    SystemChrome.setSystemUIOverlayStyle(
+/*    SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarBrightness: Brightness.dark,
@@ -33,11 +33,11 @@ final class PlatformBarController {
         systemNavigationBarColor: _colorBarDarkTheme,
         systemNavigationBarIconBrightness: Brightness.light,
       ),
-    );
+    );*/
   }
 
   void forceSetUpBarLightStyle() {
-    SystemChrome.setSystemUIOverlayStyle(
+/*    SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarBrightness: Brightness.light,
@@ -45,11 +45,11 @@ final class PlatformBarController {
         systemNavigationBarColor: _colorBarLightTheme,
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
-    );
+    );*/
   }
 
   void setUpBarSplashStyle() {
-    if (isLightPlatformTheme()) {
+/*    if (isLightPlatformTheme()) {
       SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
@@ -69,11 +69,11 @@ final class PlatformBarController {
           systemNavigationBarIconBrightness: Brightness.light,
         ),
       );
-    }
+    }*/
   }
 
   void setUpBarNormalStyle() {
-    if (isLightPlatformTheme()) {
+/*    if (isLightPlatformTheme()) {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
@@ -93,11 +93,11 @@ final class PlatformBarController {
           systemNavigationBarIconBrightness: Brightness.light,
         ),
       );
-    }
+    }*/
   }
 
   void setUpBarHomeStyle() {
-    if (isLightPlatformTheme()) {
+/*    if (isLightPlatformTheme()) {
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
@@ -117,6 +117,6 @@ final class PlatformBarController {
           systemNavigationBarIconBrightness: Brightness.light,
         ),
       );
-    }
+    }*/
   }
 }
