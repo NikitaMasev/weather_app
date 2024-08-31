@@ -5,6 +5,7 @@ import 'package:weather_app/di/configurators/app_dependencies_configurator.dart'
 import 'package:weather_app/di/providers/theme_mode_provider.dart';
 import 'package:weather_app/presentation/navigation/routes/home_transition_route.dart';
 import 'package:weather_app/presentation/pages/main_flow/home_page.dart';
+import 'package:weather_app/presentation/theming/ext/theme_mode_extension.dart';
 import 'package:weather_app/presentation/widgets/anim/animated_logo.dart';
 import 'package:weather_app/presentation/widgets/anim/progress_loader_dependencies.dart';
 
@@ -32,12 +33,9 @@ class _SplashPageState extends State<SplashPage> {
       //AppDependenciesProvider.setUp(context, appDependencies);
 
       Future.delayed(const Duration(seconds: 5), () {
-        final themeManager = ThemeModeProvider.of(context, listen: false);
+        final themeManager = ThemeModeProvider.of(context);
         print(themeManager.themeMode);
-        final brightness =
-            SchedulerBinding.instance.platformDispatcher.platformBrightness;
-        print('brightness $brightness');
-/*        switch(themeManager.themeMode) {
+        switch(themeManager.themeMode) {
           case ThemeMode.system:
             themeManager.switchToDark();
             break;
@@ -47,10 +45,10 @@ class _SplashPageState extends State<SplashPage> {
           case ThemeMode.dark:
             themeManager.switchToLight();
             break;
-        }*/
-        Navigator.of(context).pushReplacement(
+        }
+/*        Navigator.of(context).pushReplacement(
           HomeTransitionRoute(child: const HomePage()),
-        );
+        );*/
       });
     });
   }
@@ -65,6 +63,7 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(final BuildContext context) {
     final sizeContent = MediaQuery.sizeOf(context).width * 0.6;
     final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
         systemOverlayStyle: SystemUiOverlayStyle(
@@ -102,3 +101,4 @@ class _SplashPageState extends State<SplashPage> {
     );
   }
 }
+

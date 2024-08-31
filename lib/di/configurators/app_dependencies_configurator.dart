@@ -57,7 +57,7 @@ final class AppDependenciesConfigurator {
   final _controllerDependenciesState = StreamController<AppDependenciesState>();
 
   Stream<AppDependenciesState> get streamDependenciesState =>
-      _controllerDependenciesState.stream.asBroadcastStream();
+      _controllerDependenciesState.stream;
 
   Future<AppDependencies> startConfiguration() async {
     _controllerDependenciesState.add(

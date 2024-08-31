@@ -3,7 +3,7 @@ import 'package:weather_app/data/sources/shared/theme_persistent.dart';
 import 'package:weather_app/presentation/theming/controllers/platform_bar_controller.dart';
 import 'package:weather_app/presentation/theming/ext/theme_mode_extension_stringer.dart';
 
-final class ThemeModeManager extends ChangeNotifier {
+final class ThemeModeManager with ChangeNotifier {
   ThemeModeManager({
     required final ThemePersistent themePersistent,
     required final PlatformBarController platformBarController,
